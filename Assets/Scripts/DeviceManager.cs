@@ -28,7 +28,7 @@ public class DeviceManager : MonoBehaviour {
             gazePoint = lastGazePoint.Screen;    
         }
 	}
-    public float GetBrainValue()
+    public int GetBrainValue()
     {
         return brainValue;
     }

@@ -7,6 +7,8 @@ public class CatchDoll : MonoBehaviour {
 	private bool isCatching;
 	private GameObject catchedObject;
 
+    private GameObject _deviceManager;
+
 	private Vector3 lastHandlePosition;
 	// Use this for initialization
 	void Start () {
@@ -14,6 +16,8 @@ public class CatchDoll : MonoBehaviour {
 		isCatching = false;
 		catchedObject = null;
 		lastHandlePosition = ObjectsManager.instance.Handle.transform.position;
+
+        _deviceManager = GameObject.Find("DeviceManager");
 	}
 	
 	// Update is called once per frame
@@ -61,18 +65,20 @@ public class CatchDoll : MonoBehaviour {
 
 	void updateBrainValue()
 	{
-		if (Input.GetKey (KeyCode.W)) {
-			GameManager.instance.BrainValue++;
-			if (GameManager.instance.BrainValue > 100) {
-				GameManager.instance.BrainValue = 100;
-			}
-		}
-		if (Input.GetKey (KeyCode.S)) {
-			GameManager.instance.BrainValue--;
-			if (GameManager.instance.BrainValue < 0) {
-				GameManager.instance.BrainValue = 0;
-			}
-		}
+        //using device manager to update brain value
+        GameManager.instance.BrainValue = _deviceManager.GetComponent<DeviceManager>().GetBrainValue();
+        //if (Input.GetKey (KeyCode.W)) {
+        //    GameManager.instance.BrainValue++;
+        //    if (GameManager.instance.BrainValue > 100) {
+        //        GameManager.instance.BrainValue = 100;
+        //    }
+        //}
+        //if (Input.GetKey (KeyCode.S)) {
+        //    GameManager.instance.BrainValue--;
+        //    if (GameManager.instance.BrainValue < 0) {
+        //        GameManager.instance.BrainValue = 0;
+        //    }
+        //}
 	}
 
 	void updateForce(){
