@@ -24,7 +24,7 @@ public class GameLoader : MonoBehaviour {
 
 		//initPlayableItems ();
 
-		GameManager.instance.startGame ();
+		GameManager.instance.changeGameState (GameState.start);
 
 	}
 
@@ -62,5 +62,14 @@ public class GameLoader : MonoBehaviour {
 		GameObject handleInstance = Instantiate (handle)as GameObject;
 		ObjectsManager.instance.Box = boxInstance;
 		ObjectsManager.instance.Handle = handleInstance;
+	}
+
+	public void destroyPlayableItems(){
+		Destroy (ObjectsManager.instance.Box);
+		Destroy (ObjectsManager.instance.Handle);
+		foreach(GameObject g in ObjectsManager.instance.Dolls)	{
+			Destroy (g);
+		}
+		ObjectsManager.instance.clearAll ();
 	}
 }

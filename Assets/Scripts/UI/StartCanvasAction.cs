@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class PlayButtonAction : MonoBehaviour {
+public class StartCanvasAction : MonoBehaviour {
 
 	public Button playButton;
 	// Use this for initialization
@@ -16,6 +16,6 @@ public class PlayButtonAction : MonoBehaviour {
 	}
 
 	void clickPlayButton(){
-		GameManager.instance.playGame ();
+		GameManager.instance.changeGameState (GameState.playing);
 	}
 }

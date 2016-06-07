@@ -16,7 +16,7 @@ public class MoveHandle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (ObjectsManager.instance.SelectedDoll != null) {
+		if (ObjectsManager.instance.SelectedDoll != null&&GameManager.instance.getCoinNum()!=0) {
 			target = ObjectsManager.instance.SelectedDoll.transform;
 			float targetX = target.TransformPoint (new Vector3 (0, 0, 0)).x;
 			float targetZ = target.TransformPoint (new Vector3 (0, 0, 0)).z;

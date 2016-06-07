@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CatchDoll : MonoBehaviour {
 
-	private float brainValue;
 	private float force;
 	private bool isCatching;
 	private GameObject catchedObject;
@@ -11,8 +10,7 @@ public class CatchDoll : MonoBehaviour {
 	private Vector3 lastHandlePosition;
 	// Use this for initialization
 	void Start () {
-		brainValue = 0;
-		force = 0;
+		force = 0;    
 		isCatching = false;
 		catchedObject = null;
 		lastHandlePosition = ObjectsManager.instance.Handle.transform.position;
@@ -23,12 +21,11 @@ public class CatchDoll : MonoBehaviour {
 
 		updateBrainValue ();
 		updateForce ();
-		Debug.Log (brainValue);
+		//Debug.Log (GameManager.instance.BrainValue);
+		//Debug.Log (ObjectsManager.instance.SelectedDoll);
+		//Debug.Log (catchedObject);
 	
-		if (!checkIsReady ())
-			return;
-
-		if ((!isCatching)&&brainValue > 30) {
+		if ((!isCatching)&&GameManager.instance.BrainValue > 30&& (!checkIsHandleMoving ())) {
 			if (ObjectsManager.instance.SelectedDoll != null) {
 				if (GameManager.instance.tryOneCoin ()) {
 					isCatching = true;
@@ -37,11 +34,13 @@ public class CatchDoll : MonoBehaviour {
 				}
 			}
 		}
-		if (isCatching &&( brainValue < 20||(catchedObject!=ObjectsManager.instance.SelectedDoll))) {
+
+		if (isCatching && (GameManager.instance.BrainValue < 20||catchedObject!=ObjectsManager.instance.SelectedDoll)) {
 			isCatching = false;
 			catchedObject = null;
 			Debug.Log ("Lost");
 		}
+
 		if (isCatching) {
 			catchedObject.GetComponent<Rigidbody> ().AddForce (Vector3.up * force);
 			if (catchedObject.GetComponent<Rigidbody> ().position.y > 10f) {
@@ -50,10 +49,11 @@ public class CatchDoll : MonoBehaviour {
 				Destroy (ObjectsManager.instance.SelectedDoll);
 				ObjectsManager.instance.SelectedDoll = null;
 				GameManager.instance.addScore (100);
-
-				if (GameManager.instance.getCoinNum () == 0) {
-					GameManager.instance.endGame ();
-				}
+			}
+		}
+		if (!checkIsHandleMoving ()) {
+			if (catchedObject == null && GameManager.instance.getCoinNum () == 0) {
+				GameManager.instance.changeGameState (GameState.end);
 			}
 		}
 
@@ -62,36 +62,36 @@ public class CatchDoll : MonoBehaviour {
 	void updateBrainValue()
 	{
 		if (Input.GetKey (KeyCode.W)) {
-			brainValue++;
-			if (brainValue > 100) {
-				brainValue = 100;
+			GameManager.instance.BrainValue++;
+			if (GameManager.instance.BrainValue > 100) {
+				GameManager.instance.BrainValue = 100;
 			}
 		}
 		if (Input.GetKey (KeyCode.S)) {
-			brainValue--;
-			if (brainValue < 0) {
-				brainValue = 0;
+			GameManager.instance.BrainValue--;
+			if (GameManager.instance.BrainValue < 0) {
+				GameManager.instance.BrainValue = 0;
 			}
 		}
 	}
 
 	void updateForce(){
-		force = brainValue * 0.5f;// + Random.Range (-10, 10);
+		force = GameManager.instance.BrainValue * 0.5f;// + Random.Range (-10, 10);
 		if (force < 0)
 			force = 0;
 		if (force > 50)
 			force = 50;
 	}
 
-	private bool checkIsReady(){
+	private bool checkIsHandleMoving(){
 		Vector3 currentHandlePosition=ObjectsManager.instance.Handle.transform.position;
 		//Debug.Log (Vector3.Distance (currentHandlePosition, lastHandlePosition));
 		if (Vector3.Distance(currentHandlePosition,lastHandlePosition)<0.002f) {
 			lastHandlePosition = currentHandlePosition;
-			return true;
+			return false;
 		} else {
 			lastHandlePosition = currentHandlePosition;
-			return false;
+			return true;
 		}
 	}
 }

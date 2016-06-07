@@ -26,6 +26,12 @@ public class ObjectsManager : MonoBehaviour {
 		set{ handle = value; }
 	}
 
+	public ArrayList Dolls
+	{
+		get{ return dolls; }
+		set{ dolls = value; }
+	}
+
 	public void addDoll(GameObject doll){
 		dolls.Add (doll);
 	}

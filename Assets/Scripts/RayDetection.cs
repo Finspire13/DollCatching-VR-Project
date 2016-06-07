@@ -50,6 +50,9 @@ public class RayDetection : MonoBehaviour {
 				}
 			}
 		} else {
+
+			ObjectsManager.instance.SelectedDoll = null;
+
 			if (lastDetectedObject != null) {
 				Renderer lastRend = lastDetectedObject.gameObject.GetComponent<Renderer> ();
 				lastRend.material = normalMaterial;
