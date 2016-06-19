@@ -10,7 +10,7 @@ public class MoveHandle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		handleVelocity = Vector3.zero;
-		origin = ObjectsManager.instance.Box.transform.TransformPoint (new Vector3 (0, 15f, 0f));
+		origin = new Vector3 (0, 0.6f, 0f);
 		smoothTime = 0.8F;
 	}
 	

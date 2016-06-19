@@ -47,7 +47,7 @@ public class CatchDoll : MonoBehaviour {
 
 		if (isCatching) {
 			catchedObject.GetComponent<Rigidbody> ().AddForce (Vector3.up * force);
-			if (catchedObject.GetComponent<Rigidbody> ().position.y > 10f) {
+			if (catchedObject.GetComponent<Rigidbody> ().position.y > 0.40f) {
 				isCatching = false;
 				catchedObject = null;
 				Destroy (ObjectsManager.instance.SelectedDoll);
@@ -66,23 +66,23 @@ public class CatchDoll : MonoBehaviour {
 	void updateBrainValue()
 	{
         //using device manager to update brain value
-        GameManager.instance.BrainValue = _deviceManager.GetComponent<DeviceManager>().GetBrainValue();
-        //if (Input.GetKey (KeyCode.W)) {
-        //    GameManager.instance.BrainValue++;
-        //    if (GameManager.instance.BrainValue > 100) {
-        //        GameManager.instance.BrainValue = 100;
-        //    }
-        //}
-        //if (Input.GetKey (KeyCode.S)) {
-        //    GameManager.instance.BrainValue--;
-        //    if (GameManager.instance.BrainValue < 0) {
-        //        GameManager.instance.BrainValue = 0;
-        //    }
-        //}
+        //GameManager.instance.BrainValue = _deviceManager.GetComponent<DeviceManager>().GetBrainValue();
+        if (Input.GetKey (KeyCode.W)) {
+            GameManager.instance.BrainValue++;
+            if (GameManager.instance.BrainValue > 100) {
+                GameManager.instance.BrainValue = 100;
+            }
+        }
+        if (Input.GetKey (KeyCode.S)) {
+            GameManager.instance.BrainValue--;
+            if (GameManager.instance.BrainValue < 0) {
+                GameManager.instance.BrainValue = 0;
+            }
+        }
 	}
 
 	void updateForce(){
-		force = GameManager.instance.BrainValue * 0.5f;// + Random.Range (-10, 10);
+		force = GameManager.instance.BrainValue * 0.35f;// + Random.Range (-10, 10);
 		if (force < 0)
 			force = 0;
 		if (force > 50)
@@ -92,7 +92,7 @@ public class CatchDoll : MonoBehaviour {
 	private bool checkIsHandleMoving(){
 		Vector3 currentHandlePosition=ObjectsManager.instance.Handle.transform.position;
 		//Debug.Log (Vector3.Distance (currentHandlePosition, lastHandlePosition));
-		if (Vector3.Distance(currentHandlePosition,lastHandlePosition)<0.002f) {
+		if (Vector3.Distance(currentHandlePosition,lastHandlePosition)<0.00002f) {
 			lastHandlePosition = currentHandlePosition;
 			return false;
 		} else {

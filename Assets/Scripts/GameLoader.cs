@@ -50,10 +50,10 @@ public class GameLoader : MonoBehaviour {
 
 	public void initPlayableItems(){
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 15; i++) {
 			GameObject dollInstance = Instantiate (doll) as GameObject;
-			dollInstance.transform.position= new Vector3(Random.Range(-8f, 8f), Random.Range(5f, 15f), Random.Range(-7f, 7f));
-			dollInstance.transform.localScale= new Vector3(Random.Range(1f, 5f), Random.Range(1f, 5f), Random.Range(1f, 5f));
+			dollInstance.transform.position= new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(0f, 1.2f), Random.Range(-0.2f, 0.2f));
+			dollInstance.transform.localScale= new Vector3(Random.Range(1.2f, 1.2f), Random.Range(1.2f, 1.2f), Random.Range(1.2f, 1.2f));
 			dollInstance.transform.localEulerAngles= new Vector3(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
 			ObjectsManager.instance.addDoll (dollInstance);
 		}

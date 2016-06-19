@@ -23,9 +23,10 @@ public class RayDetection : MonoBehaviour {
 	void Update () {
 		RaycastHit hit;
 		//Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        var gazePoint = _deviceManager.GetComponent<DeviceManager>().GetGazePoint();
-        Ray ray = Camera.main.ScreenPointToRay(gazePoint);//using gaze point instead of mouse input
-
+        //var gazePoint = _deviceManager.GetComponent<DeviceManager>().GetGazePoint();
+        //Ray ray = Camera.main.ScreenPointToRay(gazePoint);//using gaze point instead of mouse input
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		Debug.Log (Input.mousePosition);
 		if (Physics.Raycast (ray, out hit)) {
 			currentDetectedObject = hit.rigidbody;
 
@@ -35,6 +36,7 @@ public class RayDetection : MonoBehaviour {
 				if (currentDetectedObject != lastDetectedObject) {
 					Renderer currentRand = currentDetectedObject.gameObject.GetComponent<Renderer> ();
 					currentRand.material = highLightedMaterial;
+					Debug.Log ("!!!");
 
 					ObjectsManager.instance.SelectedDoll = currentDetectedObject.gameObject;
 
